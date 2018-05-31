@@ -9,21 +9,12 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-    // Assign member ID
-
-    // Broadcast a connection
-    io.emit('connection', "A new member has joined.");
 
     // Send message
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
-
-    // Broadcast a disconnection
-    io.on('disconnect', function(){
-        io.emit('disconnect');
-    });
-
+    
 });
 
 http.listen(3000, function(){

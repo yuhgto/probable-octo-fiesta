@@ -25,9 +25,6 @@
     <script>
     $(function () {
         var socket = io();
-        socket.on('connection', function(logon){
-            $('#messages').append($('<li>').text("A member has joined."));
-        });
 
         $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
@@ -37,10 +34,6 @@
 
         socket.on('chat message', function(msg){
             $('#messages').append($('<li>').text(msg));
-        });
-
-        socket.on('disconnect', function(logoff){
-            $('#messages').append($('<li>').text("A member has left."));
         });
     });
     </script>
