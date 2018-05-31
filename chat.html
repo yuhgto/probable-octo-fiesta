@@ -70,10 +70,6 @@
             return false;
         });
 
-        socket.on('new connection', function() {
-            console.log("A user connected!");
-        });
-
         socket.on('user joined', function(username){
             $('#messages').append($('<li>').text(username + " has joined the chatroom."));
             console.log("A user was added.");
