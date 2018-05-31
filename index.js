@@ -10,11 +10,19 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
+    io.emit('new connection');
+
+    // Broadcast message when new user joins
+    socket.on('add user', (username) => {
+        socket.username = username;
+        io.emit('user joined', username);
+    });
+
     // Send message
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
-    
+
 });
 
 http.listen(3000, function(){
