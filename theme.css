@@ -1,0 +1,45 @@
+body {
+    background-color: #040404;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* .grid-container {
+    display: grid;
+    grid-template-columns: 25% auto 25%;
+    grid-template-rows: 30% auto 30%;
+    grid-template-areas:
+        'text text sidebar'
+        'text text sidebar'
+        'input input input';
+} */
+
+.button-box {
+    position: absolute;
+    top: 50%;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    background-color: #0C7489;
+    color: #D7D9CE;
+    border: none;
+    padding: 16px 16px;
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+}
+/* COLOR PALETTE:
+Blue-green: #119DA4
+Metallic seaweed: #OC7489
+Midnight green: #13505B
+Rich black: #040404
+Timberwolf: D7D9CE */
