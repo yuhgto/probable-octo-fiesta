@@ -6,6 +6,9 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var num_users = 0;
+var num_rooms = 0;
+
 // Function to generate a username (numerical identifier)
 
 app.get('/', function(req, res){
@@ -18,13 +21,14 @@ io.on('connection', function(socket){
 
     // Broadcast message when new user joins
     socket.on('add user', (username) => {
-        socket.username = username;
         io.emit('user joined', username);
     });
 
     // Send message
-    socket.on('chat message', (user, msg){
-        io.emit('chat message', msg);
+    socket.on('chat message', (sender, msg) => {
+        sender = socket.username;
+        msg = "MESSAGE_HERE";
+        io.emit('chat message', (sender, msg));
     });
 
 });

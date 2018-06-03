@@ -1,13 +1,91 @@
 <!doctype html>
-<link rel="stylesheet" type="text/css" href="theme.css">
-<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-
-<head></head>
-
+<html>
+<head>
+    <title>Socket.IO chat</title>
+    <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font: 13px Helvetica, Arial; }
+    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+    form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+    form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; }
+    #messages li:nth-child(odd) { background: #eee; }
+    </style>
+</head>
 <body>
 
-    <div class="button-box"> <div class = "button-container">
-        <a href="chat.html" class="button"> START CHAT </a> <a class="button"> JOIN CHAT </a>
-    </div> </div>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    $(function () {
+        // initialize variables
+        var username;
+        var chatroom;
+        var connected = false;
+
+        // entries to generate usernames
+        var adjectives_usernames = ["Salty",
+        "Fruity",
+        "Yellow",
+        "Blue",
+        "Green",
+        "Orange",
+        "Fuschia",
+        "Smelly",
+        "Thirsty" ];
+        var nouns_usernames = ["Octopus",
+        "Shark",
+        "Dolphin",
+        "Shoebox",
+        "Wasp",
+        "Egg",
+        "Elephant",
+        "Hippo",
+        "Walrus" ];
+
+        var socket = io();
+
+        const setUsername = () => {
+            var adj = adjectives_usernames[Math.floor(Math.random()*adjectives_usernames.length)];
+            var noun = nouns_usernames[Math.floor(Math.random()*nouns_usernames.length)];
+            var username = adj.concat(" ").concat(noun);
+            // var username = "Dipro";
+            console.log("The username " + username + " was generated.");
+            // tell server your username!
+            socket.emit('add user', username);
+            return username;
+        };
+
+        username = setUsername();
+
+        $('form').submit(function(){
+            socket.emit('chat message', (username, $('#m').val()));
+            $('#m').val('');
+            return false;
+        });
+
+        socket.on('user joined', function(username){
+            $('#messages').append($('<li>').text(username + " has joined the chatroom."));
+            console.log("A user was added.");
+        });
+
+        socket.on('chat message', (sender, msg) => {
+            if (sender == username) {
+                $('#messages').append($('<li class="sent">').text("POOPSICLE"));
+            }
+            else {
+                $('#messages').append($('<li class="received">').text(sender + ": " + msg));
+            }
+            console.log("A message was sent.");
+        });
+    });
+    </script>
 
 </body>
+</html>

@@ -13,6 +13,14 @@ body {
         'input input input';
 } */
 
+.sent {
+    text-align: right;
+}
+
+.received {
+    text-align: left;
+}
+
 .button-box {
     position: absolute;
     top: 50%;

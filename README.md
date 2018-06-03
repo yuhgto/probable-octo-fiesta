@@ -2,6 +2,11 @@
 
 This is a project that allows people to open private chatrooms and talk to their friends. When everyone leaves the chatroom, it disappears.
 
+## Todos:
+1. Style message feed to include usernames and separate recieved from sent messages
+2. Add functionality for multiple rooms
+3. 
+
 ## Technologies
 
 At the moment, this project uses Socket.io for messaging and Node.js on the backend.
