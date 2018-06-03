@@ -70,18 +70,13 @@
             return false;
         });
 
-        socket.on('user joined', function(username){
-            $('#messages').append($('<li>').text(username + " has joined the chatroom."));
+        socket.on('user joined', function(newuser){
+            $('#messages').append($('<li>').text(newuser + " has joined the chatroom."));
             console.log("A user was added.");
         });
 
-        socket.on('chat message', (sender, msg) => {
-            if (sender == username) {
-                $('#messages').append($('<li class="sent">').text("POOPSICLE"));
-            }
-            else {
-                $('#messages').append($('<li class="received">').text(sender + ": " + msg));
-            }
+        socket.on('chat message', (data) => {
+            $('#messages').append($('<li class="received">').text(data.username + ": " + data.message));
             console.log("A message was sent.");
         });
     });

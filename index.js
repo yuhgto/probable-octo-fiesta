@@ -21,14 +21,16 @@ io.on('connection', function(socket){
 
     // Broadcast message when new user joins
     socket.on('add user', (username) => {
+        socket.username = username;
         io.emit('user joined', username);
     });
 
     // Send message
-    socket.on('chat message', (sender, msg) => {
-        sender = socket.username;
-        msg = "MESSAGE_HERE";
-        io.emit('chat message', (sender, msg));
+    socket.on('chat message', (data) => {
+        io.emit('chat message', {
+            username: socket.username,
+            message: data,
+        });
     });
 
 });
