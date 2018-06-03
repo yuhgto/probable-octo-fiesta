@@ -1,3 +1,7 @@
+// Author: Dipro Bhowmik
+// Date: June 1, 2018
+// SERVER-SIDE CODE FOR CHATROOM APP
+
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -19,7 +23,7 @@ io.on('connection', function(socket){
     });
 
     // Send message
-    socket.on('chat message', function(msg){
+    socket.on('chat message', (user, msg){
         io.emit('chat message', msg);
     });
 

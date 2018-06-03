@@ -1,3 +1,7 @@
+// Author: Dipro Bhowmik
+// Date: June 1, 2018
+// CLIENT-SIDE CODE FOR CHATROOM APP
+
 $(function () {
 
     // initialize variables
@@ -41,7 +45,7 @@ $(function () {
     setUsername();
 
     $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', {"username": username, "message": $('#m').val()});
         $('#m').val('');
         return false;
     });
