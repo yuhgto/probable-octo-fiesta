@@ -2,10 +2,14 @@
 
 This is a project that allows people to open private chatrooms and talk to their friends. When everyone leaves the chatroom, it disappears.
 
+## Usage and testing:
+
+1. Run "index.js" by using `node index.js`
+2. Open two instances via localhost:3000 in web browser
+
 ## Todos:
 1. Style message feed to include usernames and separate recieved from sent messages
 2. Add functionality for multiple rooms
-3. 
 
 ## Technologies
 

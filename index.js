@@ -2,15 +2,16 @@
 // Date: June 1, 2018
 // SERVER-SIDE CODE FOR CHATROOM APP
 
-var app = require('express')();
+var express = require('express')
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
 
 var num_users = 0;
 var num_rooms = 0;
 
-// Function to generate a username (numerical identifier)
-
+app.use(express.static(path.join(__dirname + "/css"))); // allows HTML files to reference stylesheets
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });

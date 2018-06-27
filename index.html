@@ -1,20 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
 <head>
     <title>Socket.IO chat</title>
-    <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial; }
-    form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-    form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-    form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-    #messages { list-style-type: none; margin: 0; padding: 0; }
-    #messages li { padding: 5px 10px; }
-    #messages li:nth-child(odd) { background: #eee; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="theme.css">
 </head>
 <body>
-
     <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
@@ -51,32 +42,40 @@
 
         var socket = io();
 
+        // Method to pick random username
         const setUsername = () => {
+            // pick random words from adjective and noun list
             var adj = adjectives_usernames[Math.floor(Math.random()*adjectives_usernames.length)];
             var noun = nouns_usernames[Math.floor(Math.random()*nouns_usernames.length)];
+
+            // concatenate adjective + noun to form username
             var username = adj.concat(" ").concat(noun);
-            // var username = "Dipro";
             console.log("The username " + username + " was generated.");
+
             // tell server your username!
             socket.emit('add user', username);
             return username;
         };
 
+        // Set username at start of session
         username = setUsername();
 
+        // Broadcast new messages to all sockets
         $('form').submit(function(){
             socket.emit('chat message', (username, $('#m').val()));
             $('#m').val('');
             return false;
         });
 
+        // Display new user information when user joins
         socket.on('user joined', function(newuser){
-            $('#messages').append($('<li>').text(newuser + " has joined the chatroom."));
+            $('#messages').append($('<li class="message">').text(newuser + " has joined the chatroom."));
             console.log("A user was added.");
         });
 
+        // Display new messages on broadcasts
         socket.on('chat message', (data) => {
-            $('#messages').append($('<li class="received">').text(data.username + ": " + data.message));
+            $('#messages').append($('<li class="message">').text(data.username + ": " + data.message));
             console.log("A message was sent.");
         });
     });
