@@ -11,7 +11,10 @@ var path = require('path');
 var num_users = 0;
 var num_rooms = 0;
 
+// configure express server paths
 app.use(express.static(path.join(__dirname + "/css"))); // allows HTML files to reference stylesheets
+
+// configure server router
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
